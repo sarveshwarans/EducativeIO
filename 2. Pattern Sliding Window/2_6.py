@@ -1,3 +1,6 @@
+from re import sub
+
+
 def findNoRepeatSubString1(inputArray):
     windowStart = 0
     windowEnd = 0 
@@ -13,26 +16,20 @@ def findNoRepeatSubString1(inputArray):
 
 
 def findNoRepeatSubString(inputArray):
-    windowStart = 0 
+    windowStart = 0
     windowEnd = 0
-    charFrequence = {}
-    maxSubStringCount = 0
+    windowFreq = {}
+    subStringLength = 0
     for windowEnd in range(len(inputArray)):
         currentChar = inputArray[windowEnd]
-        if currentChar not in charFrequence:
-            charFrequence[currentChar] = 0
-            maxSubStringCount = max(maxSubStringCount,windowEnd-windowStart+1)
-            charFrequence[currentChar] += 1
+        if currentChar not in windowFreq:
+            windowFreq[currentChar]=1
+            subStringLength = max(subStringLength,windowEnd-windowStart+1)
         else:
-            charFrequence[currentChar] += 1
-            while charFrequence[currentChar] == 1:
-                leftChar = inputArray[windowStart]
-                charFrequence[leftChar] -= 1
-                if charFrequence[leftChar] == 0:
-                    del charFrequence[leftChar]
-                windowStart += 1
-            windowStart = windowEnd
-    return maxSubStringCount
+            windowStart=windowEnd
+            windowFreq={}
+    return subStringLength
+
 
 
 
