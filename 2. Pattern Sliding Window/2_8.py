@@ -1,24 +1,21 @@
 def findLongestSubarryWithOnesAfterReplacement(kSize,inputArray):
-    windowStart = 0
-    windowEnd = 0
-    numberFrequence = {}
-    maxLongestSubArrayCount = 0 
-    maxFrequenceOfOne = 0
+    numFreq ={}
+    windowStart=0
+    windowEnd=0
+    longestSubArray = 0
     for windowEnd in range(len(inputArray)):
-        currentNumber = inputArray[windowEnd]
-        if currentNumber not in numberFrequence:
-            numberFrequence[currentNumber] = 0
-        numberFrequence[currentNumber] += 1
-        if currentNumber == 1:
-            maxFrequenceOfOne = numberFrequence[currentNumber]
-        if windowEnd-windowStart+1 - maxFrequenceOfOne > kSize:
+        currentNum = inputArray[windowEnd]
+        if currentNum not in numFreq:
+            numFreq[currentNum]=0
+        numFreq[currentNum]+=1
+        while numFreq[0]>kSize:
             leftNumber = inputArray[windowStart]
-            numberFrequence[leftNumber] -= 1
-            if numberFrequence[leftNumber] == 0:
-                del numberFrequence[leftNumber]
-            windowStart += 1
-        maxLongestSubArrayCount = max(maxLongestSubArrayCount, windowEnd-windowStart+1)
-    return maxLongestSubArrayCount
+            numFreq[leftNumber]-=1
+            if numFreq[leftNumber]==0:
+                del numFreq[leftNumber]
+            windowStart+=1
+        longestSubArray = max(longestSubArray,windowEnd-windowStart+1)
+    return longestSubArray
 
 def main():
     print(findLongestSubarryWithOnesAfterReplacement(2,[0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1]))
