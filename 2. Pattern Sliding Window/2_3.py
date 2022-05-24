@@ -24,18 +24,17 @@ import sys
 def smallestSubarrayWithAGivenSum(sizeK, inputArray):
     windowStart = 0
     windowEnd = 0 
-    smallestSubArraySize = sys.maxsize
-    windowSize = 0
     windowSum = 0
+    outputSize = sys.maxsize
     for windowEnd in range(len(inputArray)):
-        windowSum += inputArray[windowEnd]
-        windowSize += 1
-        while windowSum >= sizeK:
-            smallestSubArraySize = min (smallestSubArraySize, windowSize)
-            windowSum -= inputArray[windowStart]
-            windowStart += 1
-            windowSize -= 1
-    return smallestSubArraySize
+        windowSum+=inputArray[windowEnd]
+        while windowSum==sizeK:
+            currentWindowSize = windowEnd-windowStart+1
+            outputSize = min(outputSize,currentWindowSize)
+            windowSum-=inputArray[windowStart]
+            windowStart+=1
+    return currentWindowSize
+
 
 def main():
     result = smallestSubarrayWithAGivenSum(8,[3, 4, 1, 1, 6])
