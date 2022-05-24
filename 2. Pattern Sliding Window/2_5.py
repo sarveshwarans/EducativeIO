@@ -1,21 +1,20 @@
 def findFruitsIntoBasket(inputArray):
-    currentFruit = 0
     windowStart = 0
     windowEnd = 0
-    maxFruitCount = 0 
-    fruitFrequence = {}
+    maxFruitCount = 0
+    windowFruitFreq = {}
     for windowEnd in range(len(inputArray)):
         currentFruit = inputArray[windowEnd]
-        if currentFruit not in fruitFrequence:
-            fruitFrequence[currentFruit] = 0
-        fruitFrequence[currentFruit] += 1
-        while len(fruitFrequence)>2:
-            leftFruit = inputArray[windowStart]
-            fruitFrequence[leftFruit] -= 1
-            if fruitFrequence[leftFruit] == 0:
-                del fruitFrequence[leftFruit]
-            windowStart += 1
-        maxFruitCount = max(maxFruitCount, windowEnd-windowStart+1)
+        if currentFruit not in windowFruitFreq:
+            windowFruitFreq[currentFruit]=0
+        windowFruitFreq[currentFruit]+=1
+        while len(windowFruitFreq)>2:
+            leftFruit=inputArray[windowStart]
+            windowFruitFreq[leftFruit]-=1
+            if windowFruitFreq[leftFruit]==0:
+                del windowFruitFreq[leftFruit]
+            windowStart+=1
+        maxFruitCount = max(maxFruitCount,windowEnd-windowStart+1)
     return maxFruitCount
 
 def main():
