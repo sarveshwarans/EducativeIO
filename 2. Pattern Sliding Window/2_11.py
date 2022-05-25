@@ -44,42 +44,36 @@ return subString"""
 
 def findSmallestWindowContainingSubstring(patternString,inputString):
     windowStart = 0
-    windowEnd = 0 
-    needCount = 0
-    haveCount = 0
-    patternFreq = {}
-    outputStringLength = sys.maxsize
-    outputString = ""
-
-
+    windowEnd = 0
+    smallestSubstring = ''
+    wantFreq = {}
+    wantFreqCount = 0
+    haveFreq ={}
+    haveFreqCount = 0
     for character in patternString:
-        if character not in patternFreq:
-            patternFreq[character] = 0
-        patternFreq[character]+=1
-        #needCount +=1 
-    needCount = len(patternFreq)
-    windowFreq = {}
-    
+        if character not in wantFreq:
+            wantFreq[character]=0
+        wantFreq[character]+=1
+    wantFreqCount=len(wantFreq)
     for windowEnd in range(len(inputString)):
-        currentChar = inputString[windowEnd]
+        currentChar=inputString[windowEnd]
         if currentChar in patternString:
-            if currentChar not in windowFreq:
-                windowFreq[currentChar]=0
-            windowFreq[currentChar]+=1
-            if windowFreq[currentChar] == patternFreq[currentChar]:
-                haveCount += 1
-
-        while haveCount == needCount:
-            if windowEnd-windowStart+1 < outputStringLength:
-                outputStringLength = windowEnd-windowStart+1
-                outputString = inputString[windowStart:windowEnd+1]
-            leftChar = inputString[windowStart]
+            if currentChar not in haveFreq:
+                haveFreq[currentChar]=0
+            haveFreq[currentChar]+=1
+            if haveFreq[currentChar]==wantFreq[currentChar]:
+                haveFreqCount+=1
+        while haveFreqCount>=wantFreqCount:
+            smallestSubstring = inputString[windowStart:windowEnd+1]
+            leftChar=inputString[windowStart]
             if leftChar in patternString:
-                windowFreq[leftChar]-=1
-                if windowFreq[leftChar] < patternFreq[leftChar]:
-                    haveCount -=1
+                haveFreq[leftChar]-=1
+                if haveFreq[leftChar]<wantFreq[leftChar]:
+                    haveFreqCount-=1
+                if haveFreq[leftChar]==0:
+                    del haveFreq[leftChar]
             windowStart+=1
-    return outputString
+    return smallestSubstring
 
 
 
@@ -87,8 +81,8 @@ def findSmallestWindowContainingSubstring(patternString,inputString):
 
 
 def main():
-    #print(findSmallestWindowContainingSubstring("ABC","ADOBECODEBANC"))
-    #print(findSmallestWindowContainingSubstring("abc","adcad"))
+    print(findSmallestWindowContainingSubstring("ABC","ADOBECODEBANC"))
+    print(findSmallestWindowContainingSubstring("abc","adcad"))
     print(findSmallestWindowContainingSubstring("aba","bbaa"))
 
     
