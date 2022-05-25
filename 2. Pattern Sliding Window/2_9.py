@@ -1,27 +1,26 @@
 def permutationInString(patternString, inputString):
-    windowStart = 0
-    windowEnd = 0 
-    patternFrequency = {}
-    windowFrequency = {}
     patternLength = len(patternString)
+    windowStart = 0
+    windowEnd = 0
+    patternFreq = {}
     for character in patternString:
-        if character not in patternFrequency:
-            patternFrequency[character]= 0
-        patternFrequency[character]+=1
+        if character not in patternFreq:
+            patternFreq[character]=0
+        patternFreq[character]+=1
+    windowFreq={}
     for windowEnd in range(len(inputString)):
-        currentChar = inputString[windowEnd]
-        if currentChar not in windowFrequency:
-            windowFrequency[currentChar] = 0
-        windowFrequency[currentChar] += 1
-        if windowEnd >= patternLength-1:
-            if windowFrequency == patternFrequency:
+        currentChar=inputString[windowEnd]
+        if currentChar not in windowFreq:
+            windowFreq[currentChar]=0
+        windowFreq[currentChar]+=1
+        if windowEnd>=patternLength-1:
+            if windowFreq==patternFreq:
                 return True
-            else:
-                leftChar = inputString[windowStart]
-                windowFrequency[leftChar] -=1
-                if windowFrequency[leftChar]==0:
-                    del windowFrequency[leftChar]
-                windowStart += 1
+            leftChar=inputString[windowStart]
+            windowFreq[leftChar]-=1
+            if windowFreq[leftChar]==0:
+                del windowFreq[leftChar]
+            windowStart+=1
     return False
 
 def main():
