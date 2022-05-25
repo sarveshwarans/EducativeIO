@@ -1,35 +1,30 @@
 def findWordsConcatenation(givenWords,inputString):
+    givenWordsFreq={}
+    for word in givenWords:
+        if word not in givenWordsFreq:
+            givenWordsFreq[word]=0
+        givenWordsFreq[word]+=1
     windowStart = 0
     windowEnd = 0
-    currentWord = ""
-    givenWordFreq = {}
-    givenWordLength = len(givenWords[0])
-    givenWordsTotalLength = 0
-    for word in givenWords:
-        if word not in givenWordFreq:
-            givenWordsTotalLength += len(word)
-            givenWordFreq[word]=0
-        givenWordFreq[word]+=1
-    windowFreq = {}
-    startingIndicesOutput = []
-
+    windowWordFreq={}
+    outputIndices = []
+    windowChar,firstHalf,secondHalf='','',''
     for windowEnd in range(len(inputString)):
         currentChar = inputString[windowEnd]
-        currentWord += currentChar 
-        if windowEnd>=givenWordsTotalLength-1:
-            windowWordsSplit = [currentWord[i:i+givenWordLength] for i in range(0,len(currentWord),givenWordLength)]
-            for word in windowWordsSplit:
-                if word not in windowFreq:
-                    windowFreq[word]=0
-                windowFreq[word]+=1
-            if windowFreq == givenWordFreq:
-                startingIndicesOutput.append(windowStart)
-                for word in windowFreq:
-                    windowFreq[word]-=1
+        windowChar += currentChar
+        if windowEnd>=len(givenWords)*len(givenWords[0])-1:
+            firstHalf = windowChar[:int(len(windowChar)/len(givenWords))]
+            secondHalf =windowChar[int(len(windowChar)/len(givenWords)):]
+            windowWordFreq[firstHalf]=1
+            windowWordFreq[secondHalf]=1
+            if givenWordsFreq==windowWordFreq:
+                outputIndices.append(windowStart)
             windowStart+=1
-            currentWord = currentWord[1:]
-            windowFreq = {}
-    return startingIndicesOutput
+            windowChar = windowChar[1:]
+            firstHalf,secondHalf='',''
+            windowWordFreq={}
+    return outputIndices
+
 
 
 def main():
