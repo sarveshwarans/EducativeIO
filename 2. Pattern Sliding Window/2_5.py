@@ -1,6 +1,3 @@
-from turtle import st
-
-
 def findFruitsIntoBasket(inputArray):
     fruitFreq={}
     maxCount=0
