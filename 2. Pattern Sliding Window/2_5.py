@@ -1,22 +1,23 @@
+from turtle import st
+
+
 def findFruitsIntoBasket(inputArray):
-    currentFruit = 0
-    windowStart = 0
-    windowEnd = 0
-    maxFruitCount = 0 
-    fruitFrequence = {}
-    for windowEnd in range(len(inputArray)):
-        currentFruit = inputArray[windowEnd]
-        if currentFruit not in fruitFrequence:
-            fruitFrequence[currentFruit] = 0
-        fruitFrequence[currentFruit] += 1
-        while len(fruitFrequence)>2:
-            leftFruit = inputArray[windowStart]
-            fruitFrequence[leftFruit] -= 1
-            if fruitFrequence[leftFruit] == 0:
-                del fruitFrequence[leftFruit]
-            windowStart += 1
-        maxFruitCount = max(maxFruitCount, windowEnd-windowStart+1)
-    return maxFruitCount
+    fruitFreq={}
+    maxCount=0
+    start=0
+    for end in range(len(inputArray)):
+        currentFruit=inputArray[end]
+        if currentFruit not in fruitFreq:
+            fruitFreq[currentFruit]=0
+        fruitFreq[currentFruit]+=1
+        while len(fruitFreq)>2:
+            leftMostFruit=inputArray[start]
+            fruitFreq[leftMostFruit]-=1
+            if fruitFreq[leftMostFruit]==0:
+                del fruitFreq[leftMostFruit]
+            start+=1
+        maxCount=max(maxCount,end-start+1)
+    return maxCount
 
 def main():
     result = findFruitsIntoBasket(['A', 'B', 'C', 'B', 'B', 'C'])
