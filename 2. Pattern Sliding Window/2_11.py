@@ -42,7 +42,7 @@ if subString == "" and patternString == inputString:
     subString = inputString        
 return subString"""
 
-def findSmallestWindowContainingSubstring(patternString,inputString):
+def findSmallestWindowContainingSubstring1(patternString,inputString):
     windowStart = 0
     windowEnd = 0 
     needCount = 0
@@ -82,15 +82,49 @@ def findSmallestWindowContainingSubstring(patternString,inputString):
     return outputString
 
 
-
+def findSmallestWindowContainingSubstring(patternString,inputString):
+    patternFreq={}
+    wantCount=0
+    for char in patternString:
+        if char not in patternFreq:
+            patternFreq[char]=0
+        patternFreq[char]+=1
+        wantCount+=1
+    windowFreq={}
+    start=0
+    haveCount=0
+    outputString=""
+    outputLength=sys.maxsize
+    for end in range(len(inputString)):
+        currentChar=inputString[end]
+        if currentChar in patternString:
+            if currentChar not in windowFreq:
+                windowFreq[currentChar]=0
+            windowFreq[currentChar]+=1
+            if windowFreq[currentChar]<=patternFreq[currentChar]:
+                haveCount+=1
+            while haveCount>=wantCount:
+                currentLength=end-start+1
+                if outputLength>currentLength:
+                    outputString=inputString[start:end+1]
+                    outputLength=len(outputString)
+                leftMostChar=inputString[start]
+                if leftMostChar in patternString:
+                    windowFreq[leftMostChar]-=1
+                    if windowFreq[leftMostChar]<patternFreq[leftMostChar]:
+                        haveCount-=1
+                    if windowFreq[leftMostChar]==0:
+                        del windowFreq[leftMostChar]
+                start+=1  
+    return outputString
 
 
 
 def main():
-    #print(findSmallestWindowContainingSubstring("ABC","ADOBECODEBANC"))
-    #print(findSmallestWindowContainingSubstring("abc","adcad"))
+    print(findSmallestWindowContainingSubstring("ABC","ADOBECODEBANC"))
+    print(findSmallestWindowContainingSubstring("abc","adcad"))
     print(findSmallestWindowContainingSubstring("aba","bbaa"))
-
+    print(findSmallestWindowContainingSubstring("abc","aabdec"))
     
 main()
          
