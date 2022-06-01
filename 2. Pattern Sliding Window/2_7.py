@@ -1,4 +1,4 @@
-def findLongestSubStringWithSameLettersAfterReplacement(kValue,inputArray):
+def findLongestSubStringWithSameLettersAfterReplacement1(kValue,inputArray):
     charFrequency = {}
     windowStart = 0
     windowEnd = 0
@@ -18,6 +18,28 @@ def findLongestSubStringWithSameLettersAfterReplacement(kValue,inputArray):
             windowStart+=1
         maxSubStringCount = max(maxSubStringCount,windowEnd-windowStart+1)
     return maxSubStringCount
+
+
+def findLongestSubStringWithSameLettersAfterReplacement(kValue,inputArray):
+    start=0
+    longestSubStringDistance=0
+    windowFreq={}
+    maxFreqInWindow=0
+    for end in range(len(inputArray)):
+        currentChar=inputArray[end]
+        if currentChar not in windowFreq:
+            windowFreq[currentChar]=0
+        windowFreq[currentChar]+=1
+        maxFreqInWindow=max(maxFreqInWindow,windowFreq[currentChar])
+        currentWindowLength=end-start+1
+        if currentWindowLength-maxFreqInWindow>kValue:
+            leftMostChar=inputArray[end]
+            windowFreq[leftMostChar]-=1
+            if windowFreq[leftMostChar]==0:
+                del windowFreq[leftMostChar]
+            start+=1
+        longestSubStringDistance=max(longestSubStringDistance,currentWindowLength)   
+    return longestSubStringDistance 
 
 def main():
     print(findLongestSubStringWithSameLettersAfterReplacement(2,"aabccbb"))
