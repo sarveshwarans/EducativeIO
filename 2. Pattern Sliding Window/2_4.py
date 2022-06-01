@@ -25,27 +25,24 @@
 
 
 def findLongestSubstringWithKDistinctCharacters(k, inputArray):
-    charFrequency = {}
-    windowStart = 0
-    windowEnd = 0
-    leftChar = 0
-    longestSubStringCount = 0
-    for windowEnd in range(len(inputArray)):
-        currentChar = inputArray[windowEnd]
-        if currentChar not in charFrequency:
-            charFrequency[currentChar] = 0
-        charFrequency[currentChar]+=1
-        while len(charFrequency)>k:
-            leftChar = inputArray[windowStart]
-            charFrequency[leftChar] -=1
-            if charFrequency[leftChar]==0:
-                del charFrequency[leftChar]
-            windowStart += 1
-        longestSubStringCount = max(longestSubStringCount,windowEnd-windowStart+1)
-    return longestSubStringCount
+    charFreq={}
+    start=0
+    end=0
+    maxSubStringSize=0
+    for end in range(len(inputArray)):
+        if inputArray[end] not in charFreq:
+            charFreq[inputArray[end]]=0
+        charFreq[inputArray[end]]+=1
+        while len(charFreq)>k:
+            charFreq[inputArray[start]]-=1
+            if charFreq[inputArray[start]]==0:
+                del charFreq[inputArray[start]]
+            start+=1
+        maxSubStringSize=max(maxSubStringSize,end-start+1)
+    return maxSubStringSize
 
 def main():
-    result = findLongestSubstringWithKDistinctCharacters(3,"araaci")
+    result = findLongestSubstringWithKDistinctCharacters(2,"araaci")
     print(result) 
     result = findLongestSubstringWithKDistinctCharacters(3,"cbbebi")
     print(result) 
