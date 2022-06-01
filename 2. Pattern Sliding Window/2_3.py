@@ -1,4 +1,6 @@
 import sys
+
+from pkg_resources import require
 """def smallestSubarrayWithAGivenSum(sumK, inputArray):
     smallestArraySizeOutput = sys.maxsize
     windowStart = 0
@@ -21,24 +23,23 @@ import sys
     return smallestArraySizeOutput
 """
 
-def smallestSubarrayWithAGivenSum(sizeK, inputArray):
-    windowStart = 0
-    windowEnd = 0 
-    smallestSubArraySize = sys.maxsize
-    windowSize = 0
-    windowSum = 0
-    for windowEnd in range(len(inputArray)):
-        windowSum += inputArray[windowEnd]
-        windowSize += 1
-        while windowSum >= sizeK:
-            smallestSubArraySize = min (smallestSubArraySize, windowSize)
-            windowSum -= inputArray[windowStart]
-            windowStart += 1
-            windowSize -= 1
-    return smallestSubArraySize
+def smallestSubarrayWithAGivenSum1(givenSum, inputArray):
+    start=0
+    end=0
+    windowSum=0
+    requiredSize=sys.maxsize
+    for end in range(len(inputArray)):
+        windowSum+=inputArray[end]
+        while windowSum>=givenSum:
+            requiredSize=min(requiredSize,end-start+1)
+            windowSum-=inputArray[start]
+            start+=1
+    return requiredSize
+
+
 
 def main():
-    result = smallestSubarrayWithAGivenSum(8,[3, 4, 1, 1, 6])
+    result = smallestSubarrayWithAGivenSum1(4,[3, 4, 1, 1, 6])
     print(result) 
     
 main()
