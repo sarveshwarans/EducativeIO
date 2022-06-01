@@ -12,7 +12,7 @@ def findNoRepeatSubString1(inputArray):
     return maxSubStringCount
 
 
-def findNoRepeatSubString(inputArray):
+def findNoRepeatSubString2(inputArray):
     windowStart = 0 
     windowEnd = 0
     charFrequence = {}
@@ -34,6 +34,22 @@ def findNoRepeatSubString(inputArray):
             windowStart = windowEnd
     return maxSubStringCount
 
+def findNoRepeatSubString(inputArray):
+    start=0
+    windowFreq={}
+    stringLength=0
+    for end in range(len(inputArray)):
+        currentChar=inputArray[end]
+        if currentChar not in windowFreq:
+            windowFreq[currentChar]=0
+        windowFreq[currentChar]+=1
+        if windowFreq[currentChar]==1:
+            stringLength=max(stringLength,end-start+1)
+        else:
+            windowFreq={}
+            windowFreq[currentChar]=1
+            start=end
+    return stringLength
 
 
 def main():
