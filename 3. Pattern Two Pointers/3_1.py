@@ -1,7 +1,7 @@
 from turtle import left
 
 
-def pairWithTargetSum(target,inputList):
+def pairWithTargetSum1(target,inputList):
     leftPointer,rightPointer=0,len(inputList)-1
     outputIndices=[]
     while leftPointer<rightPointer:
@@ -14,7 +14,7 @@ def pairWithTargetSum(target,inputList):
         elif currentSum>target:
             rightPointer-=1
 
-def pairWithTargetSumUsingHM(target,inputList):
+def pairWithTargetSumUsingHM1(target,inputList):
     hashMap ={}
     for currentIndex,currentNumber in enumerate(inputList):
         requiredNumber = target-currentNumber
@@ -23,6 +23,32 @@ def pairWithTargetSumUsingHM(target,inputList):
         else:
             return [currentIndex,hashMap[requiredNumber]]
         
+
+def pairWithTargetSum(target,inputList):
+    l=0
+    r=len(inputList)-1
+    while l<r:
+        currentSum=inputList[l]+inputList[r]
+        if currentSum==target:
+            #return[inputList[l],inputList[r]]
+            return[l,r]
+        elif currentSum<target:
+            l+=1
+        else:
+            r-=1
+    return []
+
+def pairWithTargetSumUsingHM(target,inputList):
+    hashMap={}
+    for index,number in enumerate(inputList):
+        iAmLookingFor=target-number
+        if iAmLookingFor not in hashMap:
+            hashMap[number]=index
+        else:
+            #return [number,inputList[hashMap[iAmLookingFor]]]
+            return[index,hashMap[iAmLookingFor]]
+    return []
+
 
 def main():
     print(pairWithTargetSum(6,[1, 2, 3, 4, 6]))
