@@ -1,4 +1,4 @@
-def removeDuplicates(inputList):
+def removeDuplicates1(inputList):
     leftPointer,rightPointer=0,1
     while rightPointer<len(inputList):
         if inputList[leftPointer]==inputList[rightPointer]:
@@ -13,7 +13,7 @@ def removeDuplicates(inputList):
 find the new element. After finding new element, i will have to replace left+1 with new element, then move
 both left and right pointer by 1"""
 
-def removeAllInstanceOfKeyInPlace(key,inputList):
+def removeAllInstanceOfKeyInPlace1(key,inputList):
     firstNonKeyStartsHere=0
     for i in range(len(inputList)):
         if inputList[i]==key:
@@ -25,6 +25,34 @@ def removeAllInstanceOfKeyInPlace(key,inputList):
 
 """First find the non key element. Till then we can keep incrementing i in for loop. After finding non key element
 replace LP with that non key element. Then increment LP by 1"""
+
+def removeDuplicates(inputList):
+    l,r=0,1
+    while r<len(inputList):
+        if inputList[l]==inputList[r]:
+            r+=1
+        else:
+            inputList[l+1],inputList[r]=inputList[r],inputList[l+1]
+            l+=1
+            r+=1
+    return l+1
+    
+def removeAllInstanceOfKeyInPlace(key,inputList):
+    l=0
+    r=0
+    while r<len(inputList)-1:   
+        while inputList[r]==key:
+            r+=1
+        inputList[l],inputList[r]=inputList[r],inputList[l]
+        l+=1
+        r+=1
+    return l
+
+
+
+
+
+
 def main():
     print(removeDuplicates([2, 3, 3, 3, 6, 9, 9]))
     print(removeDuplicates([2, 2, 2, 11]))  
