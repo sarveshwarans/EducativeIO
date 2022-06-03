@@ -1,5 +1,5 @@
 import sys
-def tripletSumCloseToTarget(target,inputList):
+def tripletSumCloseToTarget1(target,inputList):
     inputList.sort()
     lP,rP=0,len(inputList)-1
     howClose=sys.maxsize
@@ -24,6 +24,28 @@ def tripletSumCloseToTarget(target,inputList):
                 howClose=min(abs(target-currentSum),howClose)
     return tripletOutputSum
 
+def tripletSumCloseToTarget(target,inputList):
+    inputList.sort()
+    smallestDistance=sys.maxsize
+    outputSum=0
+    for i in range(len(inputList)):
+        currentNum=inputList[i]
+        left=i+1
+        right=len(inputList)-1
+        while left<right:
+            currentTripletSum=currentNum+inputList[left]+inputList[right]
+            distanceFromTarget=currentTripletSum-target
+            if abs(distanceFromTarget)<smallestDistance:
+                smallestDistance=abs(distanceFromTarget)
+                outputSum=currentTripletSum
+            if currentTripletSum<target:
+                left+=1
+            else:
+                right-=1
+    return outputSum
+
+
+
 def main():
     print(tripletSumCloseToTarget(2,[-2, 0, 1, 2]))
     print(tripletSumCloseToTarget(1,[-3, -1, 1, 2]))  
@@ -38,3 +60,4 @@ main()
 -2 2 = -2-2=-4
 
 """
+
