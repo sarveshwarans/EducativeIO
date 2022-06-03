@@ -1,7 +1,6 @@
-from pdb import post_mortem
+from collections import deque
 
-
-def squareOfNumbersInSortedOrder(inputList):
+def squareOfNumbersInSortedOrder1(inputList):
     lP,rP=0,len(inputList)-1
     highestIndex=len(inputList)-1
     outputList=[0 for x in range(len(inputList))]
@@ -17,6 +16,18 @@ def squareOfNumbersInSortedOrder(inputList):
             highestIndex-=1
             lP+=1
     return outputList
+
+def squareOfNumbersInSortedOrder(inputList):
+    outputList=deque()
+    l,r=0,len(inputList)-1
+    while l<=r:
+        if abs(inputList[l])>abs(inputList[r]):
+            outputList.appendleft(inputList[l]*inputList[l])
+            l+=1
+        elif abs(inputList[l])<=abs(inputList[r]):
+            outputList.appendleft(inputList[r]*inputList[r])
+            r-=1
+    return list(outputList)
 
 
 def main():
