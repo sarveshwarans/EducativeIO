@@ -1,4 +1,4 @@
-def tripletsWithSmallerSum(targetSum,inputList):
+def tripletsWithSmallerSum1(targetSum,inputList):
     outputList=[]
     inputList.sort()
     for i in range(len(inputList)-1):
@@ -23,6 +23,28 @@ def tripletsWithSmallerSum(targetSum,inputList):
 
 
     return outputList
+
+def tripletsWithSmallerSum(targetSum,inputList):
+    outputList=[]
+    inputList.sort()
+    for i in range(len(inputList)-1):
+        currentNum=inputList[i]
+        left=i+1
+        right=len(inputList)-1
+        while left<right:
+            currentSum=currentNum+inputList[left]+inputList[right]
+            if currentSum<targetSum:
+                #while left<right:
+                #    outputList.append([currentNum,inputList[left],inputList[right]])
+                #    right-=1       Here we are decrementing RIGHT which is causing the issue. Instead we will use for loop and get all the values
+                for j in range(right,left,-1):
+                    outputList.append([currentNum,inputList[left],inputList[j]])
+                left+=1
+            elif currentSum>=targetSum:
+                right-=1
+    return outputList
+
+
 
 
 def main():
