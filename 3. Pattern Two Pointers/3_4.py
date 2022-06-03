@@ -1,7 +1,4 @@
-from turtle import left
-
-
-def searchTriplet(inputList):
+def searchTriplet1(inputList):
     #If i have a sorted array i can use two pointer logic to find a pair with target sum using two pointer
     #If i am processing 3, then i would need -3(target sum) to get a 0
     inputList.sort()
@@ -36,7 +33,33 @@ def findTriplet(inputList,targetSum,leftPointer,outputTriplet):
             rightPointer-=1
         else:
             leftPointer+=1
-    
+
+def searchTriplet(inpList):
+    outputTriplets=[]
+    inpList.sort()
+    for i in range(len(inpList)-1):
+        if inpList[i]==inpList[i+1]:
+            continue
+        else:
+            currentNum=inpList[i]
+            targetSum=-currentNum
+            left=i+1
+            right=len(inpList)-1
+            while left<right:
+                currentSum=inpList[left]+inpList[right]
+                if currentSum==targetSum:
+                    outputTriplets.append([currentNum,inpList[left],inpList[right]])
+                    left+=1
+                    right-=1
+                    while inpList[left]==inpList[left-1]:
+                        left+=1
+                elif currentSum>=targetSum:
+                    right-=1
+                else:
+                    left+=1
+    return outputTriplets                            
+
+
 
 def main():
     print(searchTriplet([-3, 0, 1, 2, -1, 1, -2]))
