@@ -1,7 +1,8 @@
 from collections import deque
+from turtle import left
 
 
-def productLessThanTarget(k,nums):
+def productLessThanTarget1(k,nums):
     left=0
     currentProduct=1
     count=0
@@ -25,6 +26,22 @@ def productLessThanTarget(k,nums):
             outputList.append(list(tempList))
     return outputList
 
+def productLessThanTarget(k,nums):
+    outputList=[]
+    currentList=[]
+    currentProduct=1
+    left=0
+    for right in range(len(nums)):
+        currentNum=nums[right]
+        currentProduct*=currentNum
+        while currentProduct>=k:
+            currentProduct/=nums[left]
+            left+=1
+        currentList=deque()
+        for i in range(right,left-1,-1):
+            currentList.appendleft(nums[i])
+            outputList.append(list(currentList))
+    return outputList
 
 def main():
     print(productLessThanTarget(30,[2, 5, 3, 10]))
